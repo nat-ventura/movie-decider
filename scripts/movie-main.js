@@ -39,6 +39,9 @@ function jankQuery(movieURL) {
 function format(resultDictionary) {
     var listOfObjects = resultDictionary["Search"];
     console.log(listOfObjects);
+    listOfObjects.forEach() {
+        
+    }
 }
 
 setUpSubmitListener();
