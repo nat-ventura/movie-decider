@@ -3,11 +3,19 @@ html, body {
 }
 
 .main-container {
+    border: 10px solid cyan;
     display: flex;
     justify-content: center;
     flex-flow: column wrap;
+    margin: 1em;
+
+}
+
+.search-block {
+    border: 10px solid violet;
 }
 
 .heading {
+    border: 10px solid red;
     font-family: Arial, Helvetica, sans-serif;
 }
