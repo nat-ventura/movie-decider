@@ -1,11 +1,14 @@
 // add submit listener-- when u click submit, console.log what comes back from server
 // when you submit, add a get request
 
+
 var MOVIE_SEARCH = "[data-movie-search]";
 var OMDB_ADDRESS = "http://www.omdbapi.com/?apikey=1ca32dee&s=";
 // they're using url as way of passing info
 // two pieces of info received are: 1) api key ^^ up there
 // 2) specify search terms
+
+var RESULT_HOLDER = document.querySelector("#result-holder");
 
 function setUpSubmitListener() {
     var searchInput = document.querySelector(MOVIE_SEARCH);
@@ -46,8 +49,7 @@ function putDivInDOM(results) {
     var movieBlob = results.map (function(object) {
         var newDiv = document.createElement("div");
         newDiv.appendChild(document.createTextNode(object));
-        var currentDiv = document.getElementById("search-block");
-        document.body.insertBefore(newDiv, currentDiv);
+        RESULT_HOLDER.appendChild(newDiv);
     });
 }
 
