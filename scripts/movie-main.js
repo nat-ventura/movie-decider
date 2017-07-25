@@ -47,13 +47,14 @@ function format(resultDictionary) {
 }
 
 function resultExtractor(listOfObjects) {
-    var movieBlob = []
+    listOfBlobs = [];
     listOfObjects.map(function (object) {
-        makePoster(object["Poster"]);
-        var movieTitle = object["Title"];
-        var mediaType = object["Type"];
-        var releaseYear = object["Year"];
-        var imdbID = object["imdbID"];
+        var movieBlob = [];
+        movieBlob.push(makeTitle(object["Title"]));
+        movieBlob.push(makePoster(object["Poster"]));
+        movieBlob.push(tellType(object["Type"]));
+        movieBlob.push(tellYear(object["Year"]));
+        // var imdbID = object["imdbID"];
     });
     return movieBlob;
 }
@@ -62,6 +63,24 @@ function makePoster(posterLink) {
     var poster = document.createElement("IMG");
     poster.appendChild(document.createTextNode(posterLink));
     return poster;
+}
+
+function makeTitle(titleString) {
+    var title = document.createElement("h1");
+    title.appendChild(document.createTextNode(titleString));
+    return title;
+}
+
+function tellType(typeString) {
+    var type = document.createElement("h3");
+    title.appendChild(document.createTextNode(typeString));
+    return type;
+}
+
+function tellYear(yearString) {
+    var year = document.createElement("h1");
+    year.appendChild(document.createTextNode(yearString));
+    return year;
 }
 
 function divGetsDOMReady() {
