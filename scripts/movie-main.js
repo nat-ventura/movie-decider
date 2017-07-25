@@ -30,8 +30,7 @@ function jankQuery(movieURL) {
             console.log('Successfully came back!' + xhr.responseText);
             var parsed = JSON.parse(xhr.responseText);
             var messyResults = format(parsed);
-            document.body.onload = putDivInDOM(messyResults);
-            console.log(parsed);
+            var blob = resultExtractor(messyResults);
         }
         else {
             console.log('Request failed. Returned status of ' + xhr.status);
@@ -41,16 +40,40 @@ function jankQuery(movieURL) {
 }
 
 function format(resultDictionary) {
-    var listOfObjects = resultDictionary["Search"];
-    return listOfObjects;
+    var unpackedList = [];
+    var movieBlob = resultExtractor(resultDictionary["Search"]);
+    unpackedList.push(movieBlob);
+    return unpackedList;
 }
 
-function putDivInDOM(results) {
+function resultExtractor(listOfObjects) {
+    var movieBlob = []
+    listOfObjects.map(function (object) {
+        makePoster(object["Poster"]);
+        var movieTitle = object["Title"];
+        var mediaType = object["Type"];
+        var releaseYear = object["Year"];
+        var imdbID = object["imdbID"];
+    });
+    return movieBlob;
+}
+
+function makePoster(posterLink) {
+    var poster = document.createElement("IMG");
+    poster.appendChild(document.createTextNode(posterLink));
+    return poster;
+}
+
+function divGetsDOMReady() {
     var movieBlob = results.map (function(object) {
         var newDiv = document.createElement("div");
         newDiv.appendChild(document.createTextNode(object));
         RESULT_HOLDER.appendChild(newDiv);
     });
+}
+
+function putsDivInDOM() {
+    document.body.onload = putDivInDOM(messyResults);
 }
 
 setUpSubmitListener();
