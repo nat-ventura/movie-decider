@@ -26,7 +26,8 @@ function jankQuery(movieURL) {
         if (xhr.status === 200) {
             console.log('Successfully came back!' + xhr.responseText);
             var parsed = JSON.parse(xhr.responseText);
-            format(parsed);
+            var messyResults = format(parsed);
+            document.body.onload = putDivInDOM(messyResults);
             console.log(parsed);
         }
         else {
@@ -38,10 +39,16 @@ function jankQuery(movieURL) {
 
 function format(resultDictionary) {
     var listOfObjects = resultDictionary["Search"];
-    console.log(listOfObjects);
-    listOfObjects.forEach() {
-        
-    }
+    return listOfObjects;
+}
+
+function putDivInDOM(results) {
+    var movieBlob = results.map (function(object) {
+        var newDiv = document.createElement("div");
+        newDiv.appendChild(document.createTextNode(object));
+        var currentDiv = document.getElementById("search-block");
+        document.body.insertBefore(newDiv, currentDiv);
+    });
 }
 
 setUpSubmitListener();
