@@ -29,8 +29,8 @@ function jankQuery(movieURL) {
         if (xhr.status === 200) {
             console.log('Successfully came back!' + xhr.responseText);
             var parsed = JSON.parse(xhr.responseText);
-            var messyResults = format(parsed);
-            var blob = resultExtractor(messyResults);
+            var unpackedList = format(parsed);
+            resultExtractor(unpackedList);
         }
         else {
             console.log('Request failed. Returned status of ' + xhr.status);
@@ -40,9 +40,7 @@ function jankQuery(movieURL) {
 }
 
 function format(resultDictionary) {
-    var unpackedList = [];
-    var movieBlob = resultExtractor(resultDictionary["Search"]);
-    unpackedList.push(movieBlob);
+    var unpackedList = resultDictionary["Search"];
     return unpackedList;
 }
 
@@ -55,20 +53,22 @@ function resultExtractor(listOfObjects) {
         movieBlob.push(tellType(object["Type"]));
         movieBlob.push(tellYear(object["Year"]));
         // var imdbID = object["imdbID"];
+        listOfBlobs.push(movieBlob);
     });
-    return movieBlob;
+    var extracted = divGetsDOMReady(listOfBlobs);
+}
+
+function makeTitle(titleString) {
+    var title = document.createElement("h1");
+    title.className = "resultTitle";
+    title.appendChild(document.createTextNode(titleString));
+    return title;
 }
 
 function makePoster(posterLink) {
     var poster = document.createElement("IMG");
     poster.appendChild(document.createTextNode(posterLink));
     return poster;
-}
-
-function makeTitle(titleString) {
-    var title = document.createElement("h1");
-    title.appendChild(document.createTextNode(titleString));
-    return title;
 }
 
 function tellType(typeString) {
@@ -83,16 +83,17 @@ function tellYear(yearString) {
     return year;
 }
 
-function divGetsDOMReady() {
-    var movieBlob = results.map (function(object) {
+function divGetsDOMReady(movieDataList) {
+    var movieDiv = movieDataList.map (function(object) {
         var newDiv = document.createElement("div");
         newDiv.appendChild(document.createTextNode(object));
         RESULT_HOLDER.appendChild(newDiv);
     });
+    putsDivInDOM(movieDiv);
 }
 
-function putsDivInDOM() {
-    document.body.onload = putDivInDOM(messyResults);
+function putsDivInDOM(lilDiv) {
+    document.body.onload = putDivInDOM(lilDiv);
 }
 
 setUpSubmitListener();
