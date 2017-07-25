@@ -31,6 +31,7 @@ function jankQuery(movieURL) {
             var parsed = JSON.parse(xhr.responseText);
             var unpackedList = format(parsed);
             resultExtractor(unpackedList);
+            
         }
         else {
             console.log('Request failed. Returned status of ' + xhr.status);
@@ -55,7 +56,7 @@ function resultExtractor(listOfObjects) {
         // var imdbID = object["imdbID"];
         listOfBlobs.push(movieBlob);
     });
-    var extracted = divGetsDOMReady(listOfBlobs);
+    document.body.onload = divGetsDOMReady(listOfBlobs);
 }
 
 function makeTitle(titleString) {
@@ -73,7 +74,7 @@ function makePoster(posterLink) {
 
 function tellType(typeString) {
     var type = document.createElement("h3");
-    title.appendChild(document.createTextNode(typeString));
+    type.appendChild(document.createTextNode(typeString));
     return type;
 }
 
@@ -84,16 +85,16 @@ function tellYear(yearString) {
 }
 
 function divGetsDOMReady(movieDataList) {
+    console.log(movieDataList);
     var movieDiv = movieDataList.map (function(object) {
         var newDiv = document.createElement("div");
         newDiv.appendChild(document.createTextNode(object));
+        console.log(object);
         RESULT_HOLDER.appendChild(newDiv);
+        // return newDiv;
     });
-    putsDivInDOM(movieDiv);
-}
-
-function putsDivInDOM(lilDiv) {
-    document.body.onload = putDivInDOM(lilDiv);
+    console.log(movieDiv);
+    return movieDiv;
 }
 
 setUpSubmitListener();
