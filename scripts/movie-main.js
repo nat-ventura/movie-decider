@@ -67,7 +67,7 @@ function makeTitle(titleString) {
 
 function makePoster(posterLink) {
     var poster = document.createElement("IMG");
-    poster.appendChild(document.createTextNode(posterLink));
+    poster.src = posterLink;
     return poster;
 }
 
