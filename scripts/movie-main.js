@@ -67,8 +67,13 @@ function makeTitle(titleString) {
 
 function makePoster(posterLink) {
     var poster = document.createElement("IMG");
-    poster.src = posterLink;
-    return poster;
+    if (posterLink == "N/A") {
+        var notice = document.createElement("h3");
+        notice.appendChild(document.createTextNode("No image available."));
+    } else {
+        poster.src = posterLink;
+        return poster;
+    }
 }
 
 function tellType(typeString) {
