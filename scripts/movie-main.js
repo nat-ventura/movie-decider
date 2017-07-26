@@ -46,15 +46,14 @@ function format(resultDictionary) {
 }
 
 function resultExtractor(listOfObjects) {
-    listOfBlobs = [];
-    listOfObjects.map(function (object) {
+    var listOfBlobs = listOfObjects.map(function (object) {
         var movieBlob = [];
         movieBlob.push(makeTitle(object["Title"]));
         movieBlob.push(makePoster(object["Poster"]));
         movieBlob.push(tellType(object["Type"]));
         movieBlob.push(tellYear(object["Year"]));
         // var imdbID = object["imdbID"];
-        listOfBlobs.push(movieBlob);
+        return movieBlob;
     });
     document.body.onload = divGetsDOMReady(listOfBlobs);
 }
@@ -86,15 +85,15 @@ function tellYear(yearString) {
 
 function divGetsDOMReady(movieDataList) {
     console.log(movieDataList);
-    var movieDiv = movieDataList.map (function(object) {
+    movieDataList.forEach (function(object) {
         var newDiv = document.createElement("div");
-        newDiv.appendChild(document.createTextNode(object));
+        object.forEach( function(element) {
+            newDiv.appendChild(element);
+        })
         console.log(object);
         RESULT_HOLDER.appendChild(newDiv);
         // return newDiv;
     });
-    console.log(movieDiv);
-    return movieDiv;
 }
 
 setUpSubmitListener();
